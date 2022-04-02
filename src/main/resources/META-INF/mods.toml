@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[30,)"
+license="All rights reserved"
+issueTrackerURL="https://github.com/Bug1312/DM-JavaJSON/issues"
+[[mods]]
+modId="javajson"
+version="${file.jarVersion}"
+displayName="JavaJSON"
+displayURL="https://bug.swdteam.com/"
+authors="1WTC, Bug1312"
+description='''JavaJSON is a custom model format and renderer.'''
+
+[[dependencies.javajson]]
+    modId="forge"
+    mandatory=true
+    versionRange="[30,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.javajson]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5]"
+    ordering="NONE"
+    side="BOTH"
