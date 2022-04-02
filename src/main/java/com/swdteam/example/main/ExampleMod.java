@@ -25,7 +25,7 @@ public class ExampleMod {
 		modEventBus.addListener(this::setupEntityAttributes);
 		modEventBus.addListener(this::clientSetup);
 				
-		JavaJSON.initialize();
+		JavaJSON.initialize(); // JavaJSON Extra
 		
 	}
 	

@@ -12,7 +12,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Quaternion;
 
-public class RenderTileEntityBase extends TileEntityRenderer<TileEntity> implements IUseJavaJSON {
+public class RenderTileEntityBase extends TileEntityRenderer<TileEntity> 
+implements IUseJavaJSON { // JavaJSON Extra
 
 	public RenderTileEntityBase(TileEntityRendererDispatcher rendererDispatcher, ResourceLocation modelPath) {
 		super(rendererDispatcher);
