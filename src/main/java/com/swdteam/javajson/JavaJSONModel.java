@@ -61,7 +61,6 @@ public class JavaJSONModel extends Model {
 
 							
 				if(fontData.deprecatedPos) {
-
 					matrixStack.translate(fontData.origin[0], fontData.origin[1], fontData.origin[2]);				
 
 					matrixStack.translate(-0.5, 0.0, -0.5);
@@ -74,20 +73,20 @@ public class JavaJSONModel extends Model {
 					float scale = fontData.scale * modelScale / 100F;
 					matrixStack.scale(scale, scale, scale);
 				} else {
+					matrixStack.translate(0.5, 0, 0.5);
+					matrixStack.translate(fontData.origin[0] / 16D, fontData.origin[1] / 16D, fontData.origin[2] / 16D);	
+					
 					matrixStack.mulPose(Vector3f.XN.rotationDegrees(fontData.rotation[0]));
 					matrixStack.mulPose(Vector3f.YN.rotationDegrees(fontData.rotation[1]));
 					matrixStack.mulPose(Vector3f.ZN.rotationDegrees(fontData.rotation[2] + 180));
-					
-					matrixStack.translate(fontData.origin[0] - 0.5, -fontData.origin[1] - 1.5, fontData.origin[2] - 0.5);				
+										
 					float scale = fontData.scale * modelScale / 100F;
 					matrixStack.scale(scale, scale, scale);
-					
-
-
 				}
 								
-				float adjustmentX = fontData.centered ? -font.width(fontData.value) / 2 : 0;
-				font.draw(matrixStack, fontData.value, adjustmentX, 0, fontData.getColor());
+				float adjustmentX = fontData.centered[0] ? -font.width(fontData.value) / 2 : 0;
+				float adjustmentY = fontData.centered[1] ? (1 / 32F) * (fontData.scale * modelScale) : 0;
+				font.draw(matrixStack, fontData.value, adjustmentX, adjustmentY, fontData.getColor());
 
 				matrixStack.popPose();
 			}

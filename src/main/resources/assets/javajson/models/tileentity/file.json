@@ -1,0 +1,36 @@
+{
+	"texture": "textures:texture",
+	"texture_width": 64,
+	"texture_height": 64,
+	"scale": 1,
+	"font_data": [
+		{
+			"origin": [0,12,-1],
+			"rotation": [-45, 0, 0],
+			"content": "TEXT3",
+			"color": "#ff0000"
+		},
+		{
+			"origin": [0,0.5,0],
+			"rotation": [-45, 0, 0],
+			"content": "TEXT2",
+			"centered": [true, true],
+			"color": "#0000ff"
+		}
+	],
+	"groups": [
+		{
+			"pivot": [0,24,0],
+			"rotation": [0,0,0],
+			"cubes": [
+				{
+					"uv": [0,0],
+					"size": [16,16,0],
+					"origin": [-8,-16,0],
+					"inflate": 0,
+					"mirror": false
+				}
+			]
+		}
+	]
+}

@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderStatue extends RenderTileEntityBase {
 
-	private static ResourceLocation STATUE_MODEL = new ResourceLocation(ExampleMod.MODID, "/models/tileentity/statue.json");
+	private static ResourceLocation STATUE_MODEL = new ResourceLocation(ExampleMod.MODID, "/models/tileentity/file.json");
 	
 	public RenderStatue(TileEntityRendererDispatcher rendererDispatcher) {
 		super(rendererDispatcher, STATUE_MODEL);

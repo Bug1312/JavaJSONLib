@@ -87,7 +87,7 @@ class JavaJSONFile {
 		
 		@SerializedName("content")	protected String value;
 		@SerializedName("color")	private   String color = "#FFFFFF";
-		@SerializedName("centered") protected boolean centered = true;
+		@SerializedName("centered") protected boolean[] centered = { true, true };
 		@SerializedName("scale")  	protected float scale = 1;
 		@SerializedName("origin") 	protected float[] origin = { 0, 0, 0 };
 		@SerializedName("rotation") protected float[] rotation = { 0, 0, 0 };
@@ -99,10 +99,10 @@ class JavaJSONFile {
 			float[] _rotation = {_rotationX, _rotationY, _rotationZ};
 			
 			if(value == null) value = _string;
-			if(rotation == null || (rotation[0] == 0 && rotation[1] == 0 && rotation[2] == 0)) rotation = _rotation;
-			if(origin == null || (origin[0] == 0 && origin[1] == 0 && origin[2] == 0)) {
+			if(rotation == null) rotation = _rotation;
+			if(origin == null) {
 				origin = _origin;
-				deprecatedPos = true;
+//				deprecatedPos = true;
 			}
 		}
 		
