@@ -40,7 +40,7 @@ public class JavaJSONParser {
 
 			if (parsedFile.getParent() != null) model = getModelInfo(parsedFile.getParent()).getModel();
 			else {
-				JavaJSONModel generatedModel = new JavaJSONModel(parsedFile.texWidth, parsedFile.texHeight, parsedFile.scale);
+				JavaJSONModel generatedModel = new JavaJSONModel(parsedFile.texWidth, parsedFile.texHeight, parsedFile.scale, parsedFile.fontData);
 
 				for (JavaJSONFile.Group group : parsedFile.groups) {
 					JavaJSONRenderer renderer = new JavaJSONRenderer(generatedModel);

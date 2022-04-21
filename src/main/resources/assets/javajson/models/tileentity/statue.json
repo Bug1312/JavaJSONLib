@@ -4,6 +4,44 @@
 	"lightmap": "javajson:block/statue_lightmap",
 	"texture_width": 64,
 	"texture_height": 64,
+	"font_data": [
+		{
+			"x": 0,
+			"y": -0.79,
+			"z": -0.9075,
+			"string": "POLICE  ==  BOX\nooga",
+			"scale": 1,
+			"rot_x": 0,
+			"rot_y": 0,
+			"rot_z": 0
+		},
+		{
+			"origin": [0.5, 1.5, 1],
+			"rotation": [0, 90, 0],
+			"content": "POLICE  ==  BOX",
+			"color": "#ff0000"
+		},
+		{
+			"x": 0,
+			"y": -0.79,
+			"z": -0.9075,
+			"string": "POLICE  ==  BOX",
+			"scale": 1,
+			"rot_x": 0,
+			"rot_y": 180,
+			"rot_z": 0
+		},
+		{
+			"x": 0,
+			"y": -0.79,
+			"z": -0.9075,
+			"string": "POLICE  ==  BOX",
+			"scale": 1,
+			"rot_x": 0,
+			"rot_y": 270,
+			"rot_z": 0
+		}
+	],
 	"scale": 1,
 	"groups": [
 		{

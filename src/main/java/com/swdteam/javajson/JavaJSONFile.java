@@ -7,15 +7,19 @@ import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.Color;
 
 class JavaJSONFile {
 
+	@Deprecated @SerializedName("fontData") private List<FontData> _fontData = Collections.emptyList();
+	
 	@SerializedName("parent") 		   	private    String parent;
 	@SerializedName("texture") 			private    String texture;
 	@SerializedName("lightmap") 		private    String lightmap;
 	@SerializedName("texture_width") 	protected  int texWidth;
 	@SerializedName("texture_height") 	protected  int texHeight;
 	@SerializedName("scale") 			protected  float scale = 1;
+	@SerializedName("font_data") 		protected  List<FontData> fontData = _fontData;
 	@SerializedName("groups") 			protected  final List<Group> groups = Collections.emptyList();
 	
 	protected ResourceLocation getParent() {
@@ -57,17 +61,62 @@ class JavaJSONFile {
 
 		@SerializedName("group_name") protected String name;
 		@SerializedName("pivot") 	  protected float[] pivot = { 0, 0, 0 };
-		@SerializedName("rotation")   private 	List<Float> rotation = Collections.emptyList();
+		@SerializedName("rotation")   private 	float[] rotation = { 0, 0, 0 };
 		@SerializedName("children")   protected List<Group> children = Collections.emptyList();
 		@SerializedName("cubes")	  protected List<Cube> cubes = Collections.emptyList();
 			
 		protected Vector3f getRotation() {
-			float x = (float) Math.toRadians(rotation.get(0));
-			float y = (float) Math.toRadians(rotation.get(1));
-			float z = (float) Math.toRadians(rotation.get(2));
+			float x = (float) Math.toRadians(rotation[0]);
+			float y = (float) Math.toRadians(rotation[1]);
+			float z = (float) Math.toRadians(rotation[2]);
 			
-			return new Vector3f(x,y,z);
+			return new Vector3f(x, y, z);
 		}
+		
+	}
+	
+	protected static class FontData {
+
+		@Deprecated @SerializedName("string")	private String _string;
+		@Deprecated @SerializedName("x")		private float _x;
+		@Deprecated @SerializedName("y")		private float _y;
+		@Deprecated @SerializedName("z")		private float _z;
+		@Deprecated @SerializedName("rot_x")	private float _rotationX;
+		@Deprecated @SerializedName("rot_y")	private float _rotationY;
+		@Deprecated @SerializedName("rot_z")	private float _rotationZ;
+		
+		@SerializedName("content")	protected String value;
+		@SerializedName("color")	private   String color = "#FFFFFF";
+		@SerializedName("centered") protected boolean centered = true;
+		@SerializedName("scale")  	protected float scale = 1;
+		@SerializedName("origin") 	protected float[] origin = { 0, 0, 0 };
+		@SerializedName("rotation") protected float[] rotation = { 0, 0, 0 };
+					
+		protected boolean deprecatedPos = false;
+	
+		protected void setupDeprecation() {
+			float[] _origin = {_x, _y, _z};
+			float[] _rotation = {_rotationX, _rotationY, _rotationZ};
+			
+			if(value == null) value = _string;
+			if(rotation == null || (rotation[0] == 0 && rotation[1] == 0 && rotation[2] == 0)) rotation = _rotation;
+			if(origin == null || (origin[0] == 0 && origin[1] == 0 && origin[2] == 0)) {
+				origin = _origin;
+				deprecatedPos = true;
+			}
+		}
+		
+		
+		protected int getColor() {
+			return Color.parseColor(color).getValue();
+		}
+		
+//		@SerializedName("content")	protected String value = _string;
+//		@SerializedName("color")	private   String color = "#FFFFFF";
+//		@SerializedName("centered") protected boolean[] centered = { true, false };
+//		@SerializedName("scale")  	protected float scale = 1;
+//		@SerializedName("origin") 	protected float[] origin = { _x, _y, _z };
+//		@SerializedName("rotation") protected float[] rotation = { _rotationX, _rotationY, _rotationZ };
 		
 	}
 	
