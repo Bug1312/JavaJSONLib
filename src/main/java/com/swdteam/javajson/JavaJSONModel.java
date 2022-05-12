@@ -25,7 +25,7 @@ public class JavaJSONModel extends Model {
 	public List<FontData> fontData;
 	
 	public JavaJSONModel(int texWidth, int texHeight, float scale, List<FontData> fontData) {
-		super(RenderType::entityCutoutNoCull);
+		super(RenderType::entityTranslucent);
 		this.texHeight = texHeight;
 		this.texWidth = texWidth;
 		this.modelScale = scale;

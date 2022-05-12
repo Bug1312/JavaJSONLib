@@ -10,8 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 
 class JavaJSONFile {
-
-	@Deprecated @SerializedName("fontData") private List<FontData> _fontData = Collections.emptyList();
 	
 	@SerializedName("parent") 		   	private    String parent;
 	@SerializedName("texture") 			private    String texture;
@@ -19,7 +17,7 @@ class JavaJSONFile {
 	@SerializedName("texture_width") 	protected  int texWidth;
 	@SerializedName("texture_height") 	protected  int texHeight;
 	@SerializedName("scale") 			protected  float scale = 1;
-	@SerializedName("font_data") 		protected  List<FontData> fontData = _fontData;
+	@SerializedName("font_data") 		protected  List<FontData> fontData = Collections.emptyList();
 	@SerializedName("groups") 			protected  final List<Group> groups = Collections.emptyList();
 	
 	protected ResourceLocation getParent() {
@@ -76,6 +74,7 @@ class JavaJSONFile {
 	}
 	
 	protected static class FontData {
+		
 		@SerializedName("content")	protected String value;
 		@SerializedName("color")	private   String color = "#FFFFFF";
 		@SerializedName("centered") protected boolean[] centered = { true, true };
