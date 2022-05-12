@@ -1,5 +1,5 @@
 {
-	"texture": "textures:texture",
+	"texture": "javajson:texture",
 	"texture_width": 64,
 	"texture_height": 64,
 	"scale": 1,
@@ -21,12 +21,12 @@
 	"groups": [
 		{
 			"pivot": [0,24,0],
-			"rotation": [0,0,0],
+			"rotation": [0,180,0],
 			"cubes": [
 				{
 					"uv": [0,0],
-					"size": [16,16,0],
-					"origin": [-8,-16,0],
+					"size": [16,16,1],
+					"origin": [-8,-17,0],
 					"inflate": 0,
 					"mirror": false
 				}

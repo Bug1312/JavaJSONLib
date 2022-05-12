@@ -1,5 +1,6 @@
 package com.swdteam.javajson;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,51 +50,14 @@ public class JavaJSONModel extends Model {
 			renderLayer(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		}
 		
-		if(model != null && model.getModelInfo().getModel().fontData != null) {
-			Minecraft mc = Minecraft.getInstance();
-			FontRenderer font = mc.font;
-
+		if(model != null && model.getModelInfo().getModel().fontData != null) 
 			for(FontData fontData : model.getModelInfo().getModel().fontData) {
-				matrixStack.pushPose();
-				
-				fontData.setupDeprecation();
-				
-
-							
-				if(fontData.deprecatedPos) {
-					matrixStack.translate(fontData.origin[0], fontData.origin[1], fontData.origin[2]);				
-
-					matrixStack.translate(-0.5, 0.0, -0.5);
-					matrixStack.translate(0.0, -1.5, 0.0);
-
-					matrixStack.mulPose(Vector3f.XN.rotationDegrees(fontData.rotation[0] + 180));
-					matrixStack.mulPose(Vector3f.YN.rotationDegrees(-fontData.rotation[1]));
-					matrixStack.mulPose(Vector3f.ZN.rotationDegrees(fontData.rotation[2]));
-					
-					float scale = fontData.scale * modelScale / 100F;
-					matrixStack.scale(scale, scale, scale);
-				} else {
-					matrixStack.translate(0.5, 0, 0.5);
-					matrixStack.translate(fontData.origin[0] / 16D, fontData.origin[1] / 16D, fontData.origin[2] / 16D);	
-					
-					matrixStack.mulPose(Vector3f.XN.rotationDegrees(fontData.rotation[0]));
-					matrixStack.mulPose(Vector3f.YN.rotationDegrees(fontData.rotation[1]));
-					matrixStack.mulPose(Vector3f.ZN.rotationDegrees(fontData.rotation[2] + 180));
-										
-					float scale = fontData.scale * modelScale / 100F;
-					matrixStack.scale(scale, scale, scale);
-				}
-								
-				float adjustmentX = fontData.centered[0] ? -font.width(fontData.value) / 2 : 0;
-				float adjustmentY = fontData.centered[1] ? (1 / 32F) * (fontData.scale * modelScale) : 0;
-				font.draw(matrixStack, fontData.value, adjustmentX, adjustmentY, fontData.getColor());
-
-				matrixStack.popPose();
+				renderFont(matrixStack, fontData, fontData.getColor().getRed() / 255 * red, fontData.getColor().getGreen() / 255 * green, fontData.getColor().getBlue() / 255 * blue, alpha);
 			}
-		}
+						
 	}
 	
-	private void renderLayer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderLayer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		matrixStack.pushPose();
 		matrixStack.translate(0.5, 0.0, 0.5);
 		matrixStack.scale(modelScale, modelScale, modelScale);
@@ -102,6 +66,31 @@ public class JavaJSONModel extends Model {
 		for(JavaJSONRenderer renderer : renderList) renderer.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		
 		matrixStack.popPose();
+	}
+	
+	public void renderFont(MatrixStack matrixStack, FontData fontData, float red, float green, float blue, float alpha) {
+		Minecraft mc = Minecraft.getInstance();
+		FontRenderer font = mc.font;
+
+		matrixStack.pushPose();
+		
+		matrixStack.translate(0.5, 0, 0.5);
+		matrixStack.translate(fontData.origin[0] / 16D, fontData.origin[1] / 16D, fontData.origin[2] / 16D);	
+		
+		matrixStack.mulPose(Vector3f.XN.rotationDegrees(fontData.rotation[0]));
+		matrixStack.mulPose(Vector3f.YN.rotationDegrees(fontData.rotation[1]));
+		matrixStack.mulPose(Vector3f.ZN.rotationDegrees(fontData.rotation[2] + 180));					
+				
+		float scale = fontData.scale * modelScale / 100F;
+		matrixStack.scale(scale, scale, scale);
+		
+		float adjustmentX = fontData.centered[0] ? -font.width(fontData.value) / 2 : 0;
+		float adjustmentY = fontData.centered[1] ? (1 / 32F) * (fontData.scale * modelScale) : 0;
+
+		font.draw(matrixStack, fontData.value, adjustmentX, adjustmentY, new Color(red, green, blue, alpha).hashCode());
+		
+		matrixStack.popPose();
+		
 	}
 	
 }

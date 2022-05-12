@@ -1,5 +1,6 @@
 package com.swdteam.javajson;
 
+import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.Color;
 
 class JavaJSONFile {
 
@@ -76,47 +76,16 @@ class JavaJSONFile {
 	}
 	
 	protected static class FontData {
-
-		@Deprecated @SerializedName("string")	private String _string;
-		@Deprecated @SerializedName("x")		private float _x;
-		@Deprecated @SerializedName("y")		private float _y;
-		@Deprecated @SerializedName("z")		private float _z;
-		@Deprecated @SerializedName("rot_x")	private float _rotationX;
-		@Deprecated @SerializedName("rot_y")	private float _rotationY;
-		@Deprecated @SerializedName("rot_z")	private float _rotationZ;
-		
 		@SerializedName("content")	protected String value;
 		@SerializedName("color")	private   String color = "#FFFFFF";
 		@SerializedName("centered") protected boolean[] centered = { true, true };
 		@SerializedName("scale")  	protected float scale = 1;
-		@SerializedName("origin") 	protected float[] origin = { 0, 0, 0 };
-		@SerializedName("rotation") protected float[] rotation = { 0, 0, 0 };
-					
-		protected boolean deprecatedPos = false;
-	
-		protected void setupDeprecation() {
-			float[] _origin = {_x, _y, _z};
-			float[] _rotation = {_rotationX, _rotationY, _rotationZ};
-			
-			if(value == null) value = _string;
-			if(rotation == null) rotation = _rotation;
-			if(origin == null) {
-				origin = _origin;
-//				deprecatedPos = true;
-			}
+		@SerializedName("origin") 	protected float[] origin = {0, 0, 0};
+		@SerializedName("rotation") protected float[] rotation = {0, 0, 0};
+		
+		protected Color getColor() {
+			return new Color(net.minecraft.util.text.Color.parseColor(color).getValue(), false);
 		}
-		
-		
-		protected int getColor() {
-			return Color.parseColor(color).getValue();
-		}
-		
-//		@SerializedName("content")	protected String value = _string;
-//		@SerializedName("color")	private   String color = "#FFFFFF";
-//		@SerializedName("centered") protected boolean[] centered = { true, false };
-//		@SerializedName("scale")  	protected float scale = 1;
-//		@SerializedName("origin") 	protected float[] origin = { _x, _y, _z };
-//		@SerializedName("rotation") protected float[] rotation = { _rotationX, _rotationY, _rotationZ };
 		
 	}
 	

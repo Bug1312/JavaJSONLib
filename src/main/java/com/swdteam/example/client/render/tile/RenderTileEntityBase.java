@@ -39,7 +39,7 @@ implements IUseJavaJSON { // JavaJSON Extra
 		matrixStack.translate(-0.5, 0.0, -0.5);
 
 		IVertexBuilder ivertexbuilder = buffer.getBuffer(getRenderType());									// JavaJSON Extra
-		getModel().renderToBuffer(matrixStack, ivertexbuilder, combinedLight, combinedOverlay, 1, 1, 1, 1);	// JavaJSON Extra
+		getModel().renderToBuffer(matrixStack, ivertexbuilder, combinedLight, combinedOverlay, 0.5F, 1, 1, 0.2F);	// JavaJSON Extra
 		
 		matrixStack.popPose();
 	}
