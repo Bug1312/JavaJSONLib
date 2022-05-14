@@ -1,6 +1,7 @@
 package com.swdteam.example.common.init;
 
 
+import com.swdteam.example.common.block.BlackboardBlock;
 import com.swdteam.example.common.block.StatueBlock;
 
 import net.minecraft.block.AbstractBlock.Properties;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.RegistryObject;
 public class ExampleBlocks {
 
 	public static RegistryObject<Block> STATUE = register("statue", new StatueBlock(Properties.of(Material.STONE).noOcclusion()), true);
+	public static RegistryObject<Block> BLACKBOARD = register("blackboard", new BlackboardBlock(Properties.of(Material.WOOD).noOcclusion()), true);
 
 	/* Register Methods */
 	private static RegistryObject<Block> register(String name, Block block, Item.Properties properties, boolean hasItem) {

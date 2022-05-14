@@ -17,7 +17,7 @@ public class StatueBlock extends RotatableTileEntityBase.WaterLoggable {
 	}
 	
 	@Override
-	public BlockRenderType getRenderShape(BlockState p_149645_1_) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.INVISIBLE;
 	}
 	

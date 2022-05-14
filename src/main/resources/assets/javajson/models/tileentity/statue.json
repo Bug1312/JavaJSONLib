@@ -9,7 +9,7 @@
 		{
 			"group_name": "bone",
 			"pivot": [0,23.5,0],
-			"rotation": [180,0,180],
+			"rotation": [0,0,0],
 			"children": [
 				{
 					"group_name": "ArmLeft",

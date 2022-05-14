@@ -40,15 +40,15 @@ public class JavaJSONParser {
 
 			if (parsedFile.getParent() != null) model = getModelInfo(parsedFile.getParent()).getModel();
 			else {
-				JavaJSONModel generatedModel = new JavaJSONModel(parsedFile.texWidth, parsedFile.texHeight, parsedFile.scale);
+				JavaJSONModel generatedModel = new JavaJSONModel(parsedFile.texWidth, parsedFile.texHeight, parsedFile.scale, parsedFile.fontData);
 
 				for (JavaJSONFile.Group group : parsedFile.groups) {
 					JavaJSONRenderer renderer = new JavaJSONRenderer(generatedModel);
 					
 					renderer.setPos(group.pivot[0], group.pivot[1], group.pivot[2]);
-					renderer.xRot =  group.getRotation().x() + (float) Math.toRadians(180);
-					renderer.yRot = -group.getRotation().y();
-					renderer.zRot =  group.getRotation().z();
+					renderer.xRot = group.getRotation().x() + (float) Math.toRadians(180);
+					renderer.yRot = group.getRotation().y() + (float) Math.toRadians(180);
+					renderer.zRot = group.getRotation().z();
 					
 					if (group.cubes != null) for (JavaJSONFile.Cube cube : group.cubes) renderer.texOffs(cube.uv[0], cube.uv[1]).addBox(cube.origin[0], cube.origin[1], cube.origin[2], cube.size[0], cube.size[1], cube.size[2], cube.inflate, cube.mirror);
 						

@@ -1,5 +1,6 @@
 package com.swdteam.javajson;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,10 +8,13 @@ import java.util.Map;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.swdteam.javajson.JavaJSONFile.FontData;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.Model;
+import net.minecraft.util.math.vector.Vector3f;
 
 public class JavaJSONModel extends Model {
 
@@ -18,12 +22,18 @@ public class JavaJSONModel extends Model {
 	public List<JavaJSONRenderer> renderList = new ArrayList<>();
 	public Map<String, JavaJSONRenderer> partsList = new HashMap<>();
 	public float modelScale;
+	public List<FontData> fontData;
 	
-	public JavaJSONModel(int texWidth, int texHeight, float scale) {
-		super(RenderType::entityCutoutNoCull);
+	public JavaJSONModel(int texWidth, int texHeight, float scale, List<FontData> fontData) {
+		super(RenderType::entityTranslucent);
 		this.texHeight = texHeight;
 		this.texWidth = texWidth;
 		this.modelScale = scale;
+		this.fontData = fontData;
+	}
+	
+	public JavaJSONModel(int texWidth, int texHeight, float scale) {
+		this(texWidth, texHeight, scale, null);
 	}
 		
 	public JavaJSONRenderer getPart(String groupName) {
@@ -39,9 +49,15 @@ public class JavaJSONModel extends Model {
 			buffer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(lightMapRenderType);
 			renderLayer(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		}
+		
+		if(model != null && model.getModelInfo().getModel().fontData != null) 
+			for(FontData fontData : model.getModelInfo().getModel().fontData) {
+				renderFont(matrixStack, fontData, fontData.getColor().getRed() / 255 * red, fontData.getColor().getGreen() / 255 * green, fontData.getColor().getBlue() / 255 * blue, alpha);
+			}
+						
 	}
 	
-	private void renderLayer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderLayer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		matrixStack.pushPose();
 		matrixStack.translate(0.5, 0.0, 0.5);
 		matrixStack.scale(modelScale, modelScale, modelScale);
@@ -50,6 +66,31 @@ public class JavaJSONModel extends Model {
 		for(JavaJSONRenderer renderer : renderList) renderer.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		
 		matrixStack.popPose();
+	}
+	
+	public void renderFont(MatrixStack matrixStack, FontData fontData, float red, float green, float blue, float alpha) {
+		Minecraft mc = Minecraft.getInstance();
+		FontRenderer font = mc.font;
+
+		matrixStack.pushPose();
+		
+		matrixStack.translate(0.5, 0, 0.5);
+		matrixStack.translate(fontData.origin[0] / 16D, fontData.origin[1] / 16D, fontData.origin[2] / 16D);	
+		
+		matrixStack.mulPose(Vector3f.XN.rotationDegrees(fontData.rotation[0]));
+		matrixStack.mulPose(Vector3f.YN.rotationDegrees(fontData.rotation[1]));
+		matrixStack.mulPose(Vector3f.ZN.rotationDegrees(fontData.rotation[2] + 180));					
+				
+		float scale = fontData.scale * modelScale / 100F;
+		matrixStack.scale(scale, scale, scale);
+		
+		float adjustmentX = fontData.centered[0] ? -font.width(fontData.value) / 2 : 0;
+		float adjustmentY = fontData.centered[1] ? (1 / 32F) * (fontData.scale * modelScale) : 0;
+
+		font.draw(matrixStack, fontData.value, adjustmentX, adjustmentY, new Color(red, green, blue, alpha).hashCode());
+		
+		matrixStack.popPose();
+		
 	}
 	
 }
