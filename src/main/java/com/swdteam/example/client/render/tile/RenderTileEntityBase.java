@@ -15,6 +15,8 @@ import net.minecraft.util.math.vector.Quaternion;
 public class RenderTileEntityBase extends TileEntityRenderer<TileEntity> 
 implements IUseJavaJSON { // JavaJSON Extra
 
+	private double trans = 1;
+	
 	public RenderTileEntityBase(TileEntityRendererDispatcher rendererDispatcher, ResourceLocation modelPath) {
 		super(rendererDispatcher);
 		registerJavaJSON(modelPath); // JavaJSON Extra
@@ -38,8 +40,10 @@ implements IUseJavaJSON { // JavaJSON Extra
 		matrixStack.mulPose(new Quaternion(0, rotation, 0, true));
 		matrixStack.translate(-0.5, 0.0, -0.5);
 
-		IVertexBuilder ivertexbuilder = buffer.getBuffer(getRenderType());									// JavaJSON Extra
-		getModel().renderToBuffer(matrixStack, ivertexbuilder, combinedLight, combinedOverlay, 1,1,1, 1);	// JavaJSON Extra
+		IVertexBuilder ivertexbuilder = buffer.getBuffer(getRenderType()); // JavaJSON Extra
+		getModel().renderToBuffer(matrixStack, ivertexbuilder, combinedLight, combinedOverlay, 1,1,1, (float) (Math.sin(trans/100) + 1)/2 ); // JavaJSON Extra
+		
+		trans++;
 		
 		matrixStack.popPose();
 	}

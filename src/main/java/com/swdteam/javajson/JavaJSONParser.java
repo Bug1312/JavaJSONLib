@@ -60,7 +60,7 @@ public class JavaJSONParser {
 				}
 			}
 			
-			return new ModelInformation(model, parsedFile.getTexture(), parsedFile.getLightMap());
+			return new ModelInformation(model, parsedFile.getTexture(), parsedFile.getLightMap(), parsedFile.getAlphaMap());
 			
 		} catch (Exception e) { e.printStackTrace(); }
 		

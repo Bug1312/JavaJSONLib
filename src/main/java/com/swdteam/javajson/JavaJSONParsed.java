@@ -30,20 +30,21 @@ public class JavaJSONParsed {
 		private JavaJSONModel model = new JavaJSONModel(0, 0, 1);
 		private ResourceLocation texture = MissingTextureSprite.getLocation();
 		private ResourceLocation lightMap;
+		private ResourceLocation alphaMap;
 
-		public ModelInformation(JavaJSONModel model, ResourceLocation tex, ResourceLocation lightMap) {
-			if(model 	!= null) this.model = model;
-			if(tex   	!= null) this.texture = tex;
+		public ModelInformation(JavaJSONModel model, ResourceLocation tex, ResourceLocation lightMap, ResourceLocation alphaMap) {
+			if(model 	!= null) this.model    = model;
+			if(tex   	!= null) this.texture  = tex;
 			if(lightMap != null) this.lightMap = lightMap;
+			if(alphaMap != null) this.alphaMap = lightMap;
 		}
 		
-		public ModelInformation(JavaJSONModel model, ResourceLocation tex) /*-*/ { this(model, tex,  null); }
-		public ModelInformation(JavaJSONModel model) /*-----------------------*/ { this(model, null, null); }
-		public ModelInformation() /*------------------------------------------*/ { this(null,  null, null); }
+		public ModelInformation() { this(null,  null, null, null); }
 				
-		public JavaJSONModel getModel() { return model; }
-		public ResourceLocation getTexture() { return texture; }
+		public JavaJSONModel getModel() 	  { return model; }
+		public ResourceLocation getTexture()  { return texture; }
 		public ResourceLocation getLightMap() { return lightMap; }
+		public ResourceLocation getAlphaMap() { return alphaMap; }
 	}
 
 }
