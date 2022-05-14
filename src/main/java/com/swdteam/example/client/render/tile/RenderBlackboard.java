@@ -5,11 +5,11 @@ import com.swdteam.example.main.ExampleMod;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderStatue extends RenderTileEntityBase {
+public class RenderBlackboard extends RenderTileEntityBase {
 
-	private static ResourceLocation STATUE_MODEL = new ResourceLocation(ExampleMod.MODID, "/models/tileentity/statue.json");
+	private static ResourceLocation STATUE_MODEL = new ResourceLocation(ExampleMod.MODID, "/models/tileentity/blackboard.json");
 	
-	public RenderStatue(TileEntityRendererDispatcher rendererDispatcher) {
+	public RenderBlackboard(TileEntityRendererDispatcher rendererDispatcher) {
 		super(rendererDispatcher, STATUE_MODEL);
 	}
 
