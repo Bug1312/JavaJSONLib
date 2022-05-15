@@ -1,10 +1,10 @@
 package com.swdteam.example.client.render.tile;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.swdteam.javajson.IUseJavaJSON;
 
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -14,8 +14,6 @@ import net.minecraft.util.math.vector.Quaternion;
 
 public class RenderTileEntityBase extends TileEntityRenderer<TileEntity> 
 implements IUseJavaJSON { // JavaJSON Extra
-
-	private double trans = 1;
 	
 	public RenderTileEntityBase(TileEntityRendererDispatcher rendererDispatcher, ResourceLocation modelPath) {
 		super(rendererDispatcher);
@@ -40,10 +38,12 @@ implements IUseJavaJSON { // JavaJSON Extra
 		matrixStack.mulPose(new Quaternion(0, rotation, 0, true));
 		matrixStack.translate(-0.5, 0.0, -0.5);
 
-		IVertexBuilder ivertexbuilder = buffer.getBuffer(getRenderType()); // JavaJSON Extra
-		getModel().renderToBuffer(matrixStack, ivertexbuilder, combinedLight, combinedOverlay, 1,1,1, (float) (Math.sin(trans/100) + 1)/2 ); // JavaJSON Extra
+		double tick = Minecraft.getInstance().player.tickCount;
+		float calc = (float) ((Math.sin(tick/10))*1.1F+1)/2;
+		if(calc < 0) calc = 0;
+		if(calc > 1) calc = 1;
 		
-		trans++;
+		getModel().renderToBuffer(matrixStack, buffer.getBuffer(getRenderType()), combinedLight, combinedOverlay, 1,1,1, calc); // JavaJSON Extra
 		
 		matrixStack.popPose();
 	}

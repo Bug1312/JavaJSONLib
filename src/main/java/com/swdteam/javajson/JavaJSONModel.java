@@ -13,7 +13,6 @@ import com.swdteam.javajson.JavaJSONFile.FontData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.IRenderTypeBuffer.Impl;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.Model;
 import net.minecraft.util.math.vector.Vector3f;
@@ -45,36 +44,37 @@ public class JavaJSONModel extends Model {
 	@Override
 	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		IRenderTypeBuffer bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-		RenderType tempRenderType;
+		RenderType renderType;
 		
-		if(model != null) {
+		if (model != null) {
 			// Alpha Overlay & Map
-			if(alpha < 1) {
+			if (0 < alpha && alpha < 1) {
 				boolean alphaMapExists = model.getModelInfo().getAlphaMap() != null;
-				tempRenderType = RenderType.entityTranslucent(JavaJSONRenderer.generateAlphaOverlay(alphaMapExists ? model.getModelInfo().getAlphaMap() : model.getModelInfo().getTexture()));
+				renderType = RenderType.entityTranslucent(JavaJSONRenderer.generateAlphaOverlay(alphaMapExists ? model.getModelInfo().getAlphaMap() : model.getModelInfo().getTexture()));
 
-				renderLayer(matrixStack, bufferSource.getBuffer(tempRenderType), packedLight, packedOverlay, red, green, blue, 1);
+				// WIP: This line currently overlays incorrectly
+				renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, 1);
 				
-				if(alphaMapExists) {
-					tempRenderType = RenderType.entityTranslucent(model.getModelInfo().getAlphaMap());
+				if (alphaMapExists) {
+					renderType = RenderType.entityTranslucent(model.getModelInfo().getAlphaMap());
 					
-					renderLayer(matrixStack, bufferSource.getBuffer(tempRenderType), packedLight, packedOverlay, red, green, blue, alpha);
+					renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, alpha);
 				}
 			}
 			
-			// Normal Model
+			// Normal Textures
 			renderLayer(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 			
 			// Light Map
 			if(model.getModelInfo().getLightMap() != null) {
-				tempRenderType = JavaJSONRenderer.lightMapRenderType(model.getModelInfo().getLightMap());
+				renderType = JavaJSONRenderer.lightMapRenderType(model.getModelInfo().getLightMap());
 				
-				renderLayer(matrixStack, bufferSource.getBuffer(tempRenderType), packedLight, packedOverlay, red, green, blue, alpha);
+				renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, alpha);
 			}
 			
 			// Font Data
-			if(model.getModelInfo().getModel().fontData != null) {
-				for(FontData fontData : model.getModelInfo().getModel().fontData) {
+			if (model.getModelInfo().getModel().fontData != null) {
+				for (FontData fontData : model.getModelInfo().getModel().fontData) {
 					renderFont(matrixStack, fontData, fontData.getColor().getRed() / 255 * red, fontData.getColor().getGreen() / 255 * green, fontData.getColor().getBlue() / 255 * blue, alpha);
 				}
 			}		
@@ -87,7 +87,7 @@ public class JavaJSONModel extends Model {
 		matrixStack.scale(modelScale, modelScale, modelScale);
 		matrixStack.translate(0.0, -1.5, 0.0);
 			
-		for(JavaJSONRenderer renderer : renderList) renderer.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+		for (JavaJSONRenderer renderer : renderList) renderer.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		
 		matrixStack.popPose();
 	}
