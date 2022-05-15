@@ -14,6 +14,7 @@ class JavaJSONFile {
 	@SerializedName("parent") 		   	private    String parent;
 	@SerializedName("texture") 			private    String texture;
 	@SerializedName("lightmap") 		private    String lightmap;
+	@SerializedName("alphamap") 		private    String alphamap;
 	@SerializedName("texture_width") 	protected  int texWidth;
 	@SerializedName("texture_height") 	protected  int texHeight;
 	@SerializedName("scale") 			protected  float scale = 1;
@@ -25,11 +26,13 @@ class JavaJSONFile {
 		else return null;
 	}
 	
-	protected ResourceLocation getTexture() { return getTexture(texture); }
+	protected ResourceLocation getTexture()  { return getTexture(texture ); }
 	protected ResourceLocation getLightMap() { return getTexture(lightmap); }
+	protected ResourceLocation getAlphaMap() { return getTexture(alphamap); }
 	
 	private static ResourceLocation getTexture(String tex) {
 		if (tex == null) return null;
+		if (tex.equals("generated")) return null; // Convert deprecated value
 		
 		int colonPos = tex.indexOf(':') + 1;
 		String modId = tex.substring(0, colonPos);
@@ -37,7 +40,7 @@ class JavaJSONFile {
 		
 		return new ResourceLocation(modId + "textures/" + path + ".png");
 	}
-	
+		
 	protected class Cube {
 
 		@SerializedName("uv") 		protected int[] uv;

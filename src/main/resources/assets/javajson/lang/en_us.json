@@ -1,6 +1,7 @@
 {
 	"block.javajson.statue" : "Angel Statue",
 	"block.javajson.blackboard" : "Blackboard",
+	"block.javajson.police_box" : "Police Box",
 	"entity.javajson.auton" : "Moving Mannequin",
 	"itemGroup.javajson" : "JavaJSON Examples"
 }

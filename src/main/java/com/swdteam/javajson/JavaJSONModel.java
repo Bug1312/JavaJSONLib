@@ -12,6 +12,7 @@ import com.swdteam.javajson.JavaJSONFile.FontData;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.Model;
 import net.minecraft.util.math.vector.Vector3f;
@@ -25,7 +26,7 @@ public class JavaJSONModel extends Model {
 	public List<FontData> fontData;
 	
 	public JavaJSONModel(int texWidth, int texHeight, float scale, List<FontData> fontData) {
-		super(RenderType::entityTranslucent);
+		super(JavaJSONRenderer::transparentRenderType);
 		this.texHeight = texHeight;
 		this.texWidth = texWidth;
 		this.modelScale = scale;
@@ -42,19 +43,40 @@ public class JavaJSONModel extends Model {
 
 	@Override
 	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		renderLayer(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-		if(model != null && model.getModelInfo().getLightMap() != null) {
-			RenderType lightMapRenderType = JavaJSONRenderer.lightMapRenderType(model.getModelInfo().getLightMap());
-			
-			buffer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(lightMapRenderType);
-			renderLayer(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-		}
+		IRenderTypeBuffer bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+		RenderType renderType;
 		
-		if(model != null && model.getModelInfo().getModel().fontData != null) 
-			for(FontData fontData : model.getModelInfo().getModel().fontData) {
-				renderFont(matrixStack, fontData, fontData.getColor().getRed() / 255 * red, fontData.getColor().getGreen() / 255 * green, fontData.getColor().getBlue() / 255 * blue, alpha);
+		if (model != null && alpha > 0 ) {
+			// Alpha Overlay & Map
+			if (alpha < 1) {
+				boolean alphaMapExists = model.getModelInfo().getAlphaMap() != null;
+				
+				renderType = JavaJSONRenderer.transparentRenderType(JavaJSONRenderer.generateAlphaOverlay(alphaMapExists ? model.getModelInfo().getAlphaMap() : model.getModelInfo().getTexture()));
+				renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, 1);
+				
+				if (alphaMapExists) {
+					renderType = JavaJSONRenderer.transparentRenderType(model.getModelInfo().getAlphaMap());
+					renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, alpha);
+				}
 			}
-						
+			
+			// Normal Textures
+			renderType = JavaJSONRenderer.transparentRenderType(model.getModelInfo().getTexture());
+			renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, alpha);
+			
+			// Light Map
+			if(model.getModelInfo().getLightMap() != null) {
+				renderType = JavaJSONRenderer.lightMapRenderType(model.getModelInfo().getLightMap());
+				renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, alpha);
+			}
+			
+			// Font Data
+			if (model.getModelInfo().getModel().fontData != null) {
+				for (FontData fontData : model.getModelInfo().getModel().fontData) {
+					renderFont(matrixStack, fontData, fontData.getColor().getRed() / 255 * red, fontData.getColor().getGreen() / 255 * green, fontData.getColor().getBlue() / 255 * blue, alpha);
+				}
+			}		
+		}
 	}
 	
 	public void renderLayer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -63,7 +85,7 @@ public class JavaJSONModel extends Model {
 		matrixStack.scale(modelScale, modelScale, modelScale);
 		matrixStack.translate(0.0, -1.5, 0.0);
 			
-		for(JavaJSONRenderer renderer : renderList) renderer.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+		for (JavaJSONRenderer renderer : renderList) renderer.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		
 		matrixStack.popPose();
 	}
