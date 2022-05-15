@@ -26,7 +26,7 @@ public class JavaJSONModel extends Model {
 	public List<FontData> fontData;
 	
 	public JavaJSONModel(int texWidth, int texHeight, float scale, List<FontData> fontData) {
-		super(RenderType::entityTranslucent);
+		super(JavaJSONRenderer::transparentRenderType);
 		this.texHeight = texHeight;
 		this.texWidth = texWidth;
 		this.modelScale = scale;
@@ -46,29 +46,27 @@ public class JavaJSONModel extends Model {
 		IRenderTypeBuffer bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
 		RenderType renderType;
 		
-		if (model != null) {
+		if (model != null && alpha > 0 ) {
 			// Alpha Overlay & Map
-			if (0 < alpha && alpha < 1) {
+			if (alpha < 1) {
 				boolean alphaMapExists = model.getModelInfo().getAlphaMap() != null;
-				renderType = RenderType.entityTranslucent(JavaJSONRenderer.generateAlphaOverlay(alphaMapExists ? model.getModelInfo().getAlphaMap() : model.getModelInfo().getTexture()));
-
-				// WIP: This line currently overlays incorrectly
+				
+				renderType = JavaJSONRenderer.transparentRenderType(JavaJSONRenderer.generateAlphaOverlay(alphaMapExists ? model.getModelInfo().getAlphaMap() : model.getModelInfo().getTexture()));
 				renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, 1);
 				
 				if (alphaMapExists) {
-					renderType = RenderType.entityTranslucent(model.getModelInfo().getAlphaMap());
-					
+					renderType = JavaJSONRenderer.transparentRenderType(model.getModelInfo().getAlphaMap());
 					renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, alpha);
 				}
 			}
 			
 			// Normal Textures
-			renderLayer(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+			renderType = JavaJSONRenderer.transparentRenderType(model.getModelInfo().getTexture());
+			renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, alpha);
 			
 			// Light Map
 			if(model.getModelInfo().getLightMap() != null) {
 				renderType = JavaJSONRenderer.lightMapRenderType(model.getModelInfo().getLightMap());
-				
 				renderLayer(matrixStack, bufferSource.getBuffer(renderType), packedLight, packedOverlay, red, green, blue, alpha);
 			}
 			

@@ -36,7 +36,7 @@ public class JavaJSONParsed {
 			if(model 	!= null) this.model    = model;
 			if(tex   	!= null) this.texture  = tex;
 			if(lightMap != null) this.lightMap = lightMap;
-			if(alphaMap != null) this.alphaMap = lightMap;
+			if(alphaMap != null) this.alphaMap = alphaMap;
 		}
 		
 		public ModelInformation() { this(null,  null, null, null); }

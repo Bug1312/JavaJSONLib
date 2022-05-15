@@ -1,9 +1,11 @@
 package com.swdteam.example.client.render.tile;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.swdteam.example.main.ExampleMod;
 import com.swdteam.javajson.IUseJavaJSON;
 
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -11,12 +13,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Quaternion;
 
-public class RenderTileEntityBase extends TileEntityRenderer<TileEntity> 
+public class RenderPoliceBox extends TileEntityRenderer<TileEntity> 
 implements IUseJavaJSON { // JavaJSON Extra
 	
-	public RenderTileEntityBase(TileEntityRendererDispatcher rendererDispatcher, ResourceLocation modelPath) {
+	private static ResourceLocation POLICE_BOX_MODEL = new ResourceLocation(ExampleMod.MODID, "/models/tileentity/police_box.json");
+	
+	public RenderPoliceBox(TileEntityRendererDispatcher rendererDispatcher) {
 		super(rendererDispatcher);
-		registerJavaJSON(modelPath); // JavaJSON Extra
+		registerJavaJSON(POLICE_BOX_MODEL); // JavaJSON Extra
 	}
 	
 	@Override
@@ -36,9 +40,15 @@ implements IUseJavaJSON { // JavaJSON Extra
 		matrixStack.translate(0.5, 0.0, 0.5);
 		matrixStack.mulPose(new Quaternion(0, rotation, 0, true));
 		matrixStack.translate(-0.5, 0.0, -0.5);
+
+		Minecraft mc = Minecraft.getInstance();
+		double tick = mc.player.tickCount;
+		float calc = (float) ((Math.sin(tick / 10)) * 1.2F + 1) / 2;
+		if (calc < 0) calc = 0;
+		if (calc > 1) calc = 1;
 		
-		getModel().renderToBuffer(matrixStack, buffer.getBuffer(getRenderType()), combinedLight, combinedOverlay, 1, 1, 1, 1); // JavaJSON Extra
-	
+		getModel().renderToBuffer(matrixStack, buffer.getBuffer(getRenderType()), combinedLight, combinedOverlay, 1, 1, 1, calc); // JavaJSON Extra
+		
 		matrixStack.popPose();
 	}
 }

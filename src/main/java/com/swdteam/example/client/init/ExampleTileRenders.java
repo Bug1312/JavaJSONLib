@@ -3,6 +3,7 @@ package com.swdteam.example.client.init;
 import java.util.function.Function;
 
 import com.swdteam.example.client.render.tile.RenderBlackboard;
+import com.swdteam.example.client.render.tile.RenderPoliceBox;
 import com.swdteam.example.client.render.tile.RenderStatue;
 import com.swdteam.example.common.init.ExampleTiles;
 
@@ -17,6 +18,7 @@ public class ExampleTileRenders {
 	public static void init() {
 		register(ExampleTiles.STATUE.get(), RenderStatue::new);
 		register(ExampleTiles.BLACKBOARD.get(), RenderBlackboard::new);
+		register(ExampleTiles.POLICE_BOX.get(), RenderPoliceBox::new);
 	}
 
 	/* Register Method */

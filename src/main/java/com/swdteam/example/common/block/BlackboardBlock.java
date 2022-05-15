@@ -31,10 +31,5 @@ public class BlackboardBlock extends RotatableTileEntityBase.WaterLoggable {
 	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.INVISIBLE;
 	}
-	
-	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return VoxelShapes.empty();
-	}
 
 }
