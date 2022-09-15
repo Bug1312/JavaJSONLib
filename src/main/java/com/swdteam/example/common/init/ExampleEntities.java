@@ -1,6 +1,6 @@
  package com.swdteam.example.common.init;
 
-import com.swdteam.example.common.entity.Auton;
+import com.swdteam.example.common.entity.MovingMannequin;
 import com.swdteam.example.main.ExampleMod;
 
 import net.minecraft.entity.Entity;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.RegistryObject;
 
 public class ExampleEntities <E extends Entity> {
 
-	public static RegistryObject<EntityType<Auton>> AUTON = register("auton", EntityType.Builder.of(Auton::new, EntityClassification.MONSTER).sized(1.0F, 2.0F));
+	public static RegistryObject<EntityType<MovingMannequin>> MOVING_MANNEQUIN = register("moving_mannequin", EntityType.Builder.of(MovingMannequin::new, EntityClassification.MONSTER).sized(1.0F, 2.0F));
 	
 	/* Register Method */
 	private static <E extends Entity> RegistryObject<EntityType<E>> register(String id, EntityType.Builder<E> entity) {

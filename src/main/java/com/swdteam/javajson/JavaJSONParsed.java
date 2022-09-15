@@ -27,16 +27,16 @@ public class JavaJSONParsed {
 	} 
 
 	public static class ModelInformation {
-		private JavaJSONModel model = new JavaJSONModel(0, 0, 1);
+		private JavaJSONModel model = new JavaJSONModel();
 		private ResourceLocation texture = MissingTextureSprite.getLocation();
 		private ResourceLocation lightMap;
 		private ResourceLocation alphaMap;
 
 		public ModelInformation(JavaJSONModel model, ResourceLocation tex, ResourceLocation lightMap, ResourceLocation alphaMap) {
-			if(model 	!= null) this.model    = model;
-			if(tex   	!= null) this.texture  = tex;
-			if(lightMap != null) this.lightMap = lightMap;
-			if(alphaMap != null) this.alphaMap = alphaMap;
+			if (model 	 != null) this.model    = model;
+			if (tex   	 != null) this.texture  = tex;
+			if (lightMap != null) this.lightMap = lightMap;
+			if (alphaMap != null) this.alphaMap = alphaMap;
 		}
 		
 		public ModelInformation() { this(null,  null, null, null); }

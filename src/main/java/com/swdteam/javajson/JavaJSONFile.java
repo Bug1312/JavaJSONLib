@@ -65,7 +65,8 @@ class JavaJSONFile {
 		@SerializedName("rotation")   private 	float[] rotation = { 0, 0, 0 };
 		@SerializedName("children")   protected List<Group> children = Collections.emptyList();
 		@SerializedName("cubes")	  protected List<Cube> cubes = Collections.emptyList();
-			
+		@SerializedName("font_data")  protected List<FontData> fontData = Collections.emptyList();
+
 		protected Vector3f getRotation() {
 			float x = (float) Math.toRadians(rotation[0]);
 			float y = (float) Math.toRadians(rotation[1]);
@@ -80,11 +81,12 @@ class JavaJSONFile {
 		
 		@SerializedName("content")	protected String value;
 		@SerializedName("color")	private   String color = "#FFFFFF";
+		@SerializedName("glow")     protected boolean glow = false;
 		@SerializedName("centered") protected boolean[] centered = { true, true };
 		@SerializedName("scale")  	protected float scale = 1;
 		@SerializedName("origin") 	protected float[] origin = {0, 0, 0};
 		@SerializedName("rotation") protected float[] rotation = {0, 0, 0};
-		
+				
 		protected Color getColor() {
 			return new Color(net.minecraft.util.text.Color.parseColor(color).getValue(), false);
 		}

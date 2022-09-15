@@ -2,6 +2,7 @@
 	"block.javajson.statue" : "Angel Statue",
 	"block.javajson.blackboard" : "Blackboard",
 	"block.javajson.police_box" : "Police Box",
-	"entity.javajson.auton" : "Moving Mannequin",
+	"item.javajson.moving_mannequin_spawner" : "Moving Mannequin Spawner",
+	"entity.javajson.moving_mannequin" : "Moving Mannequin",
 	"itemGroup.javajson" : "JavaJSON Examples"
 }

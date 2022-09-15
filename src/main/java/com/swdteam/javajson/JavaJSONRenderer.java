@@ -20,11 +20,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class JavaJSONRenderer extends ModelRenderer {
 
-	public JavaJSONRenderer(Model model) { super(model); }
+	public JavaJSONModel model;
+	
+	public JavaJSONRenderer(JavaJSONModel model) { super(model); this.model = model; }
 	public JavaJSONRenderer() { super(new BlankModel()); }
 	
 	private static class BlankModel extends Model {
-		public BlankModel() { super(RenderType::entityCutoutNoCull); }
+		public BlankModel() { super(JavaJSONRenderer::transparentRenderType); }
 		
 		@Override public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {}
 	}
@@ -55,7 +57,7 @@ public class JavaJSONRenderer extends ModelRenderer {
 			.setTransparencyState(new RenderState.TransparencyState("additive_transparency", () -> { RenderSystem.enableBlend(); RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA); }, () -> {}))
 			.setAlphaState(new RenderState.AlphaState(0.003921569F))
 			.setOverlayState(new RenderState.OverlayState(true))
-			.setCullState(new RenderState.CullState(true))
+			.setCullState(new RenderState.CullState(false))
 			.createCompositeState(true);
 		
 		return RenderType.create("java_json_light_map", DefaultVertexFormats.NEW_ENTITY, 7, 256, true, false, state);

@@ -2,7 +2,7 @@ package com.swdteam.example.main;
 
 import com.swdteam.example.client.init.ExampleEntityRenders;
 import com.swdteam.example.client.init.ExampleTileRenders;
-import com.swdteam.example.common.entity.Auton;
+import com.swdteam.example.common.entity.MovingMannequin;
 import com.swdteam.example.common.init.ExampleEntities;
 import com.swdteam.example.common.init.RegistryHandler;
 import com.swdteam.javajson.JavaJSON;
@@ -30,7 +30,7 @@ public class ExampleMod {
 	}
 	
 	private void setupEntityAttributes(EntityAttributeCreationEvent event) {
-		event.put(ExampleEntities.AUTON.get(), Auton.createAttributes().build());
+		event.put(ExampleEntities.MOVING_MANNEQUIN.get(), MovingMannequin.createAttributes().build());
 	}
 	
 	private void clientSetup(FMLClientSetupEvent event) {

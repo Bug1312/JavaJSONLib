@@ -1,5 +1,5 @@
 {
-	"credit": "Made by rainbowdestiny",
+	"credit": "Made by Bug1312",
 	"texture": "javajson:block/statue",
 	"lightmap": "javajson:block/statue_lightmap",
 	"texture_width": 64,
@@ -14,7 +14,7 @@
 				{
 					"group_name": "ArmLeft",
 					"pivot": [7,-22,1],
-					"rotation": [120,45,90],
+					"rotation": [120,-45,90],
 					"cubes": [
 						{
 							"uv": [0,43],
@@ -35,7 +35,7 @@
 				{
 					"group_name": "ArmRight",
 					"pivot": [-7,-22,1],
-					"rotation": [120,-57.5,-90],
+					"rotation": [120,57.5,-90],
 					"cubes": [
 						{
 							"uv": [0,43],
@@ -55,29 +55,29 @@
 				},
 				{
 					"group_name": "WingLeft",
-					"pivot": [1,-20,2],
+					"pivot": [1,-20,1],
 					"rotation": [0,-35,0],
 					"cubes": [
 						{
 							"uv": [34,40],
 							"size": [15,24,0],
-							"origin": [0,-10.5,0],
+							"origin": [-17,-10.5,0],
 							"inflate": 0,
-							"mirror": false
+							"mirror": true
 						}
 					]
 				},
 				{
 					"group_name": "WingRight",
-					"pivot": [-1,-20,2],
+					"pivot": [-1,-20,1],
 					"rotation": [0,35,0],
 					"cubes": [
 						{
 							"uv": [34,40],
 							"size": [15,24,0],
-							"origin": [-15,-10.5,0],
+							"origin": [2,-10.5,0],
 							"inflate": 0,
-							"mirror": true
+							"mirror": false
 						}
 					]
 				},

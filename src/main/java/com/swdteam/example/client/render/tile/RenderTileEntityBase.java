@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.swdteam.javajson.IUseJavaJSON;
 
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -36,6 +37,14 @@ implements IUseJavaJSON { // JavaJSON Extra
 		matrixStack.translate(0.5, 0.0, 0.5);
 		matrixStack.mulPose(new Quaternion(0, rotation, 0, true));
 		matrixStack.translate(-0.5, 0.0, -0.5);
+		
+		Minecraft mc = Minecraft.getInstance();
+		double tick = mc.player.tickCount;
+		double calc = ((Math.sin(tick / 10)) * Math.PI + Math.PI);
+		
+//		getJavaJSON().getPart("bb").xRot = (float) calc;
+//		getJavaJSON().getPart("bb").yRot = (float) calc;
+//		getJavaJSON().getPart("bb").zRot = (float) calc;
 		
 		getModel().renderToBuffer(matrixStack, buffer.getBuffer(getRenderType()), combinedLight, combinedOverlay, 1, 1, 1, 1); // JavaJSON Extra
 	

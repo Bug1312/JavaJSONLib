@@ -16,7 +16,7 @@ public class JavaJSONParser {
 	public static JavaJSONRenderer NULL_PART = new JavaJSONRenderer();
 	
 	public static JavaJSONParsed loadModel(ResourceLocation location) {
-		if(!JavaJSONCache.unbakedCache.contains(location)) JavaJSONCache.unbakedCache.add(location);
+		if (!JavaJSONCache.unbakedCache.contains(location)) JavaJSONCache.unbakedCache.add(location);
 		if (JavaJSONCache.bakedCache.containsKey(location)) return JavaJSONCache.bakedCache.get(location);
 		
 		JavaJSONParsed newModel = new JavaJSONParsed(location).load();
@@ -51,7 +51,10 @@ public class JavaJSONParser {
 					renderer.zRot = group.getRotation().z();
 					
 					if (group.cubes != null) for (JavaJSONFile.Cube cube : group.cubes) renderer.texOffs(cube.uv[0], cube.uv[1]).addBox(cube.origin[0], cube.origin[1], cube.origin[2], cube.size[0], cube.size[1], cube.size[2], cube.inflate, cube.mirror);
-						
+
+					if (group.fontData != null)
+						generatedModel.fontData.put(group.name, group.fontData);					
+					
 					addChildren(generatedModel, group, renderer);
 
 					generatedModel.renderList.add(renderer);
@@ -73,9 +76,9 @@ public class JavaJSONParser {
 				JavaJSONRenderer renderer = new JavaJSONRenderer(model);
 				
 				renderer.setPos(group.pivot[0], group.pivot[1], group.pivot[2]);
-				renderer.xRot = group.getRotation().x();
-				renderer.yRot = group.getRotation().y();
-				renderer.zRot = group.getRotation().z();
+				renderer.xRot =  group.getRotation().x();
+				renderer.yRot = -group.getRotation().y();
+				renderer.zRot =  group.getRotation().z();
 
 				if (group.cubes != null) for (JavaJSONFile.Cube cube : group.cubes) renderer.texOffs(cube.uv[0], cube.uv[1]).addBox(cube.origin[0], cube.origin[1], cube.origin[2], cube.size[0], cube.size[1], cube.size[2], cube.inflate, cube.mirror);
 

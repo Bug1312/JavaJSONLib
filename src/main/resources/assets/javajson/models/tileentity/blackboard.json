@@ -1,56 +1,65 @@
 {
-	"credit": "Made by Bug1312",
-	"texture": "javajson:block/blackboard",
-	"texture_width": 64,
-	"texture_height": 64,
-	"scale": 1,
-	"font_data": [
-		{
-			"content": "This is an example",
-			"centered": [false, true],
-			"origin": [6.9, 14.9, 6.99],
-			"scale": 0.9
-		},
-		{
-			"content": "of",
-			"centered": [false, true],
-			"origin": [6.9, 12.9, 6.99],
-			"scale": 0.9
-		},
-		{
-			"content": "font data",
-			"centered": [false, true],
-			"origin": [4.9, 12.9, 6.99],
-			"scale": 0.9,
-			"color": "#0000FF"
-		},
-		{
-			"content": "on",
-			"centered": [false, true],
-			"origin": [-2.4, 12.9, 6.99],
-			"scale": 0.9
-		},
-		{
-			"content": "JavaJSON",
-			"centered": [true, true],
-			"origin": [0, 10, 6.99],
-			"scale": 1.4,
-			"color": "#00FF00"
-		}
-	],
-	"groups": [
-		{
-			"pivot": [0,24,0],
-			"rotation": [0,0,0],
-			"cubes": [
-				{
-					"uv": [0,0],
-					"size": [16,16,1],
-					"origin": [-8,-16,7],
-					"inflate": 0,
-					"mirror": false
-				}
-			]
-		}
-	]
+    "credit": "Made by Bug1312",
+    "texture": "javajson:block/blackboard",
+    "texture_width": 64,
+    "texture_height": 64,
+    "scale": 1,
+    "groups": [{
+        "group_name": "bb",
+        "pivot": [0, 24, 0],
+        "rotation": [0, 0, 0],
+        "font_data": [{
+                "content": "This is an example",
+                "centered": [false, true],
+                "origin": [6.9, 14.9, 6.99],
+                "scale": 0.9
+            },
+            {
+                "content": "of",
+                "centered": [false, true],
+                "origin": [6.9, 12.9, 6.99],
+                "scale": 0.9
+            },
+            {
+                "content": "font data",
+                "centered": [false, true],
+                "origin": [4.9, 12.9, 6.99],
+                "scale": 0.9,
+                "color": "#0000FF",
+                "glow": true
+            },
+            {
+                "content": "on",
+                "centered": [false, true],
+                "origin": [-2.4, 12.9, 6.99],
+                "scale": 0.9
+            },
+            {
+                "content": "JavaJSON",
+                "centered": [true, true],
+                "origin": [0, 9, 6.99],
+                "scale": 1.4,
+                "color": "#00FF00",
+                "rotation": [0, 0, 20]
+            }
+        ],
+        "cubes": [{
+            "uv": [0, 0],
+            "size": [16, 16, 1],
+            "origin": [-8, -16, 7],
+            "inflate": 0,
+            "mirror": false
+        }]
+    }, {
+        "group_name": "bb2",
+        "pivot": [0, 24, 0],
+        "rotation": [0, 0, 0],
+        "cubes": [{
+            "uv": [0, 0],
+            "size": [16, 16, 1],
+            "origin": [-8, -16, 7],
+            "inflate": 0,
+            "mirror": false
+        }]
+    }]
 }

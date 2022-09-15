@@ -1,6 +1,6 @@
 package com.swdteam.example.client.init;
 
-import com.swdteam.example.client.render.entity.RenderAuton;
+import com.swdteam.example.client.render.entity.RenderMovingMannequin;
 import com.swdteam.example.common.init.ExampleEntities;
 
 import net.minecraft.entity.Entity;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 public class ExampleEntityRenders {
 	
 	public static void init() {
-		register(ExampleEntities.AUTON.get(), RenderAuton::new);
+		register(ExampleEntities.MOVING_MANNEQUIN.get(), RenderMovingMannequin::new);
 	}
 
 	/* Register Method */

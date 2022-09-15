@@ -17,19 +17,19 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
-public class Auton extends MonsterEntity {
-	public static final DataParameter<Integer> AUTON_TYPE = EntityDataManager.defineId(Auton.class, DataSerializers.INT);
+public class MovingMannequin extends MonsterEntity {
+	public static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(MovingMannequin.class, DataSerializers.INT);
 
-	public Auton(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public MovingMannequin(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
 	public int getAutonType() {
-		return this.entityData.get(AUTON_TYPE).intValue() % 7; 
+		return this.entityData.get(VARIANT).intValue() % 3; 
 	}
 	
 	public void setAutonType(int i) {
-		if (this.entityData != null) this.entityData.set(AUTON_TYPE, i);
+		if (this.entityData != null) this.entityData.set(VARIANT, i);
 	}
 	
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
@@ -49,7 +49,7 @@ public class Auton extends MonsterEntity {
 	
 	@Override
 	public void addAdditionalSaveData(CompoundNBT compound) {
-		if (this.entityData != null) compound.putInt("variant", this.entityData.get(AUTON_TYPE));
+		if (this.entityData != null) compound.putInt("variant", this.entityData.get(VARIANT));
 		
 		super.addAdditionalSaveData(compound);
 	}
@@ -57,14 +57,14 @@ public class Auton extends MonsterEntity {
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		if (compound.contains("variant")) this.setAutonType(compound.getInt("variant"));
-		else this.setAutonType(this.random.nextInt(7));
+		else this.setAutonType(this.random.nextInt(3));
 		
 		super.readAdditionalSaveData(compound);
 	}
 
 	@Override
 	protected void defineSynchedData() {
-		this.getEntityData().define(AUTON_TYPE, random.nextInt(7));
+		this.getEntityData().define(VARIANT, random.nextInt(7));
 		
 		super.defineSynchedData();
 	}
