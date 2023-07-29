@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.Model;
 import net.minecraft.client.renderer.texture.NativeImage;
+import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
 
 public class JavaJSONModel extends Model {
@@ -90,9 +91,11 @@ public class JavaJSONModel extends Model {
 	
 	public void renderLayer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		matrixStack.pushPose();
-		matrixStack.translate(0.5, 0.0, 0.5);
+		
+		matrixStack.translate(0.5D, 0.0D, 0.5D);
+		matrixStack.mulPose(new Quaternion(0, 0, 180, true));
 		matrixStack.scale(modelScale, modelScale, modelScale);
-		matrixStack.translate(0.0, -1.5, 0.0);
+		matrixStack.translate(0.0D, -1.5D, 0.0D);
 			
 		for (JavaJSONRenderer renderer : renderList) renderer.render(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 		
@@ -106,20 +109,20 @@ public class JavaJSONModel extends Model {
 		JavaJSONRenderer parent = model.getPart(_parent);
 		
 		matrixStack.pushPose();
-				
-		matrixStack.translate((parent.x + 8) / 16D, (parent.y - 24) / 16D, (parent.z + 8) / 16D);
-		matrixStack.mulPose(Vector3f.ZP.rotation(parent.zRot));
-		matrixStack.mulPose(Vector3f.YP.rotation(parent.yRot + (float) Math.toRadians(180)));
-		matrixStack.mulPose(Vector3f.XN.rotation(parent.xRot + (float) Math.toRadians(180)));
-		matrixStack.translate((parent.x + 8) / -16D, (parent.y - 24) / -16D, (parent.z + 8) / -16D);
 
-		matrixStack.translate(0.5, 0, 0.5);
+		matrixStack.translate(0.5D, 0.0D, 0.5D);
+		matrixStack.translate(-parent.x / 16D, 1.5D - parent.y / 16D, parent.z / 16D);
+
+		matrixStack.mulPose(Vector3f.ZP.rotation(parent.zRot));
+		matrixStack.mulPose(Vector3f.YN.rotation(parent.yRot));
+		matrixStack.mulPose(Vector3f.XN.rotation(parent.xRot));
+
 		matrixStack.translate(fontData.origin[0] / 16D, fontData.origin[1] / 16D, fontData.origin[2] / 16D);			
 		
 		matrixStack.mulPose(Vector3f.ZP.rotationDegrees(fontData.rotation[2] + 180));					
 		matrixStack.mulPose(Vector3f.YN.rotationDegrees(fontData.rotation[1]));
 		matrixStack.mulPose(Vector3f.XN.rotationDegrees(fontData.rotation[0]));
-				
+		
 		float scale = fontData.scale * modelScale / 100F;
 		matrixStack.scale(scale, scale, scale);
 		

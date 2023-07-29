@@ -20,10 +20,10 @@ public class BlackboardBlock extends RotatableTileEntityBase.WaterLoggable {
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		switch(state.getValue(FACING)) {
 			default:
-			case NORTH: return VoxelShapes.or(VoxelShapes.box(0, 0, 15/16D, 1, 1, 1));
-			case EAST: 	return VoxelShapes.or(VoxelShapes.box(0, 0, 0, 1/16D, 1, 1)); 
-			case SOUTH: return VoxelShapes.or(VoxelShapes.box(0, 0, 0, 1, 1, 1/16D)); 
-			case WEST: 	return VoxelShapes.or(VoxelShapes.box(15/16D, 0, 0, 1, 1, 1));
+			case NORTH: return VoxelShapes.or(VoxelShapes.box(0, 0, 0, 1, 1, 1/16D));
+			case EAST: 	return VoxelShapes.or(VoxelShapes.box(15/16D, 0, 0, 1, 1, 1));
+			case SOUTH: return VoxelShapes.or(VoxelShapes.box(0, 0, 15/16D, 1, 1, 1));
+			case WEST: 	return VoxelShapes.or(VoxelShapes.box(0, 0, 0, 1/16D, 1, 1));
 		}
 	}
 	

@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3f;
 
 public class RenderTileEntityBase extends TileEntityRenderer<TileEntity> 
 implements IUseJavaJSON { // JavaJSON Extra
@@ -23,28 +23,28 @@ implements IUseJavaJSON { // JavaJSON Extra
 	@Override
 	public void render(TileEntity tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {	
 		float rotation = 0;
-		
 		if(tile.getBlockState().getValues().containsKey(HorizontalBlock.FACING))
-			switch (tile.getBlockState().getValue(HorizontalBlock.FACING)) {
-				case NORTH: default: 		break;
-				case EAST: 	rotation = 270; break;
-				case SOUTH: rotation = 180; break;
-				case WEST: 	rotation =  90; break;
-			}	
+			rotation = tile.getBlockState().getValue(HorizontalBlock.FACING).toYRot();		
 				
 		matrixStack.pushPose();
 		
-		matrixStack.translate(0.5, 0.0, 0.5);
-		matrixStack.mulPose(new Quaternion(0, rotation, 0, true));
-		matrixStack.translate(-0.5, 0.0, -0.5);
+		matrixStack.translate(0.5D, 0.5D, 0.5D);
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(-rotation));
+        matrixStack.translate(-0.5D, -0.5D, -0.5D);
 		
 		Minecraft mc = Minecraft.getInstance();
 		double tick = mc.player.tickCount;
-		double calc = ((Math.sin(tick / 10)) * Math.PI + Math.PI);
+		double calc = ((Math.sin(tick / 70)) * Math.PI + Math.PI);
 		
-//		getJavaJSON().getPart("bb").xRot = (float) calc;
-//		getJavaJSON().getPart("bb").yRot = (float) calc;
-//		getJavaJSON().getPart("bb").zRot = (float) calc;
+		getJavaJSON().getPart("bb2").visible = false;
+		getJavaJSON().getPart("bb").xRot = (float) calc;
+		getJavaJSON().getPart("bb").yRot = (float) calc;
+		getJavaJSON().getPart("bb").zRot = (float) calc;
+		
+		getJavaJSON().getPart("bb").x = (float) Math.sin(tick / 10) * 5;
+		getJavaJSON().getPart("bb").y = 24 + (float) Math.sin(tick / 10) * 5;
+		getJavaJSON().getPart("bb").z = (float) Math.sin(tick / 10) * 5;
+		
 		
 		getModel().renderToBuffer(matrixStack, buffer.getBuffer(getRenderType()), combinedLight, combinedOverlay, 1, 1, 1, 1); // JavaJSON Extra
 	

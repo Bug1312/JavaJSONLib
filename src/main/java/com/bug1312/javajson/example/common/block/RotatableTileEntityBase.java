@@ -34,7 +34,7 @@ public class RotatableTileEntityBase extends TileEntityBaseBlock {
 	}
 
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
 	}
 
 	public BlockState rotate(BlockState state, Rotation rot) {
