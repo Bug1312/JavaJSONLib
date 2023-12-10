@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="[30,)"
-license="All rights reserved"
-issueTrackerURL="https://github.com/Bug1312/DM-JavaJSON/issues"
+license="MIT"
+issueTrackerURL="https://github.com/Bug1312/JavaJSONLib/issues"
 [[mods]]
 modId="javajson"
 version="${file.jarVersion}"
